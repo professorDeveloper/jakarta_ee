@@ -3,26 +3,5 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-        <welcome-file>gallery.jsp</welcome-file>
-        <welcome-file>converter.jsp</welcome-file>
-        <welcome-file>main.jsp</welcome-file>
-    </welcome-file-list>
-
-    <servlet>
-        <servlet-name>ImageUploadServlet</servlet-name>
-        <servlet-class>org.azamov.learnjakarta.ImageUploadServlet</servlet-class>
-        <multipart-config>
-            <max-file-size>5242880</max-file-size>
-            <max-request-size>26214400</max-request-size>
-            <file-size-threshold>1048576</file-size-threshold>
-        </multipart-config>
-    </servlet>
-    
-    <servlet-mapping>
-        <servlet-name>ImageUploadServlet</servlet-name>
-        <url-pattern>/upload</url-pattern>
-    </servlet-mapping>
 
 </web-app>
