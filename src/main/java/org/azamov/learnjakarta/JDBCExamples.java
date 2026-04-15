@@ -1,7 +1,9 @@
 package org.azamov.learnjakarta;
 
+import org.azamov.learnjakarta.book.Book;
+import org.azamov.learnjakarta.book.BookService;
+
 import java.sql.*;
-import java.util.Properties;
 
 public class JDBCExamples {
     public static void main(String[] args) throws SQLException {

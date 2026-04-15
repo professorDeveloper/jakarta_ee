@@ -1,4 +1,4 @@
-package org.azamov.learnjakarta;
+package org.azamov.learnjakarta.book;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

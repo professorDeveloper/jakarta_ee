@@ -1,4 +1,4 @@
-package org.azamov.learnjakarta;
+package org.azamov.learnjakarta.book;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
