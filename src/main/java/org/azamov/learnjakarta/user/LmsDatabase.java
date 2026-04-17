@@ -1,4 +1,4 @@
-package org.azamov.learnjakarta.lms_system;
+package org.azamov.learnjakarta.user;
 
 import org.postgresql.Driver;
 
@@ -30,23 +30,12 @@ public class LmsDatabase {
             }
             try (Statement statement = connection.createStatement()) {
                 statement.execute("""
-                        create schema if not exists jdbc_example
+                       create schema if not exists jdbc_example
                         """);
                 statement.execute("""
-                        create table if not exists groups (
-                            group_id integer generated always as identity primary key,
-                            group_name varchar(255) not null,
-                            created_at timestamp not null,
-                            student_count integer not null default 0
-                        )
-                        """);
-                statement.execute("""
-                        create table if not exists students (
-                            student_id integer generated always as identity primary key,
-                            created_at timestamp not null,
-                            full_name varchar(255) not null,
-                            age integer not null,
-                            group_id integer references groups(group_id) on delete set null
+                        create table if not exists users (
+                            user_id integer generated always as identity primary key,
+                            username varchar(255) not null
                         )
                         """);
             }

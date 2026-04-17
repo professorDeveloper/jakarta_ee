@@ -1,4 +1,4 @@
-<%@ page import="org.azamov.learnjakarta.lms_system.Group" %>
+<%@ page import="org.azamov.learnjakarta.user.Group" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%

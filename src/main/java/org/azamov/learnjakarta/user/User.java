@@ -1,4 +1,4 @@
-package org.azamov.learnjakarta.lms_system;
+package org.azamov.learnjakarta.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-public class Student {
+@Data
+public class User {
     private String id;
-    private String createdAt;
-    private String fullName;
-    private int age;
-    private String groupId;
+    private String username;
+
 }
