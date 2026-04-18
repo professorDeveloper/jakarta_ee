@@ -1,4 +1,4 @@
-package org.azamov.learnjakarta.user;
+package org.azamov.learnjakarta.task2.java.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,11 +7,12 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
+@Builder
 public class User {
-        private String id;
-        private String username;
-        private String password;
+    private int id;
+    private String name;
+    private String username;
+    private String password;
 
-    }
+}

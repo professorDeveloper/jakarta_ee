@@ -7,7 +7,7 @@ public class UserService {
 
     public User create(User user) {
         try {
-            var connection = LmsDatabase.getConnection();
+            var connection = UserDataBase.getConnection();
             var statement = connection.prepareStatement(
                     "insert into users (username) values (?) returning user_id"
             );
@@ -25,7 +25,7 @@ public class UserService {
 
     public User findById(String id) {
         try {
-            var connection = LmsDatabase.getConnection();
+            var connection = UserDataBase.getConnection();
             var statement = connection.prepareStatement(
                     "select * from users where user_id = ?"
             );
@@ -46,7 +46,7 @@ public class UserService {
     public ArrayList<User> getAll() {
         var users = new ArrayList<User>();
         try {
-            var connection = LmsDatabase.getConnection();
+            var connection = UserDataBase.getConnection();
             var statement = connection.prepareStatement("select * from users");
             var resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -63,7 +63,7 @@ public class UserService {
 
     public User update(User user) {
         try {
-            var connection = LmsDatabase.getConnection();
+            var connection = UserDataBase.getConnection();
             var statement = connection.prepareStatement(
                     "update users set username = ? where user_id = ?"
             );
@@ -79,7 +79,7 @@ public class UserService {
 
     public void delete(String id) {
         try {
-            var connection = LmsDatabase.getConnection();
+            var connection = UserDataBase.getConnection();
             var statement = connection.prepareStatement(
                     "delete from users where user_id = ?"
             );

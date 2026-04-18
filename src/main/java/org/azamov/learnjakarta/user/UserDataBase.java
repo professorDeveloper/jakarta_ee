@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class LmsDatabase {
+public class UserDataBase {
     private static final String URL = "jdbc:postgresql://localhost:5432/jakarta?currentSchema=jdbc_example";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "2255";
@@ -24,7 +24,7 @@ public class LmsDatabase {
         if (initialized) {
             return;
         }
-        synchronized (LmsDatabase.class) {
+        synchronized (UserDataBase.class) {
             if (initialized) {
                 return;
             }
