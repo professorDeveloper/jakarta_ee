@@ -1,8 +1,9 @@
-package org.azamov.learnjakarta.task3.servlet;
+package org.azamov.learnjakarta.task7_1.servlet;
 
-import org.azamov.learnjakarta.task3.model.Student;
-import org.azamov.learnjakarta.task3.services.GroupService;
-import org.azamov.learnjakarta.task3.services.StudentService;
+import org.azamov.learnjakarta.task7_1.helper.CookieManager;
+import org.azamov.learnjakarta.task7_1.model.Student;
+import org.azamov.learnjakarta.task7_1.services.GroupService;
+import org.azamov.learnjakarta.task7_1.services.StudentService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("students")
+@WebServlet(name = "StudentServlet")
 public class StudentServlet extends HttpServlet {
     private final StudentService studentService = new StudentService();
     private final GroupService groupService = new GroupService();
@@ -29,15 +30,16 @@ public class StudentServlet extends HttpServlet {
         if ("DELETE".equals(method)) {
             studentService.deleteStudentById(Integer.parseInt(req.getParameter("id")));
         } else {
-            int userId = (int) req.getSession().getAttribute("userId");
-            studentService.createStudent(new Student(
-                -1,
-                req.getParameter("fullName"),
-                Integer.parseInt(req.getParameter("age")),
-                Integer.parseInt(req.getParameter("groupId")),
-                userId
-            ));
+
+            studentService.createStudent(
+                    Student.builder()
+                            .groupId(Integer.parseInt(req.getParameter("group_id")))
+                            .fullName(req.getParameter("full_name"))
+                            .createdBy(CookieManager.getUserIdByCookie(req))
+                            .age(Integer.parseInt(req.getParameter("age")))
+                            .build()
+            );
         }
-        resp.sendRedirect(req.getContextPath() + "students");
+        resp.sendRedirect(req.getContextPath() + "/students");
     }
 }

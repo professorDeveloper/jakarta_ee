@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.azamov.learnjakarta.task3.model.Student" %>
-<%@ page import="org.azamov.learnjakarta.task3.model.Group" %>
+<%@ page import="org.azamov.learnjakarta.task7_1.model.Student" %>
+<%@ page import="org.azamov.learnjakarta.task7_1.model.Group" %>
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -21,9 +21,9 @@
             </div>
         </div>
         <nav class="topbar-nav">
-            <a href="${pageContext.request.contextPath}groups" class="nav-link">Guruhlar</a>
-            <a href="${pageContext.request.contextPath}students" class="nav-link active">Talabalar</a>
-            <a href="${pageContext.request.contextPath}logout" class="nav-link">Chiqish</a>
+            <a href="${pageContext.request.contextPath}/groups" class="nav-link">Guruhlar</a>
+            <a href="${pageContext.request.contextPath}/students" class="nav-link active">Talabalar</a>
+            <a href="${pageContext.request.contextPath}/logout" class="nav-link">Chiqish</a>
         </nav>
     </div>
 
@@ -35,7 +35,7 @@
     </div>
 
     <div class="form-shell" style="margin-bottom: 20px;">
-        <form method="post" action="${pageContext.request.contextPath}students">
+        <form method="post" action="${pageContext.request.contextPath}/students">
             <div class="form-grid">
                 <div class="field">
                     <label>To'liq ism</label>
@@ -77,7 +77,7 @@
                     <th>To'liq ism</th>
                     <th>Yoshi</th>
                     <th>Guruh ID</th>
-                    <th></th>
+                    <th>Yaratuvchi ID</th> <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -90,9 +90,10 @@
                     <td class="muted"><%= s.getId() %></td>
                     <td><strong><%= s.getFullName() %></strong></td>
                     <td><%= s.getAge() %></td>
-                    <td><span class="pill"><%= s.getGroupId() %></span></td>
+                    <td><span class="pill">Guruh #<%= s.getGroupId() %></span></td>
+                    <td><span class="muted">User #<%= s.getCreatedBy() %></span></td>
                     <td>
-                        <form method="post" action="${pageContext.request.contextPath}students" class="inline-form">
+                        <form method="post" action="${pageContext.request.contextPath}/students" class="inline-form">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="id" value="<%= s.getId() %>">
                             <button type="submit" class="danger-btn" onclick="return confirm('O\'chirishni tasdiqlaysizmi?')">O'chirish</button>
@@ -100,12 +101,11 @@
                     </td>
                 </tr>
                 <%
-                        }
-                    } else {
+                    }
+                } else {
                 %>
                 <tr>
-                    <td colspan="5" class="empty-state">Talabalar mavjud emas</td>
-                </tr>
+                    <td colspan="6" class="empty-state">Talabalar mavjud emas</td> </tr>
                 <% } %>
                 </tbody>
             </table>

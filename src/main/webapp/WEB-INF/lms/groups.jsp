@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.azamov.learnjakarta.task3.model.Group" %>
+<%@ page import="org.azamov.learnjakarta.task7_1.model.Group" %>
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -55,7 +55,7 @@
                     <th>#</th>
                     <th>Nomi</th>
                     <th>Talabalar soni</th>
-                    <th>Yaratilgan</th>
+                    <th>Yaratuvchi ID</th> <th>Yaratilgan</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -69,9 +69,10 @@
                     <td class="muted"><%= g.getId() %></td>
                     <td><strong><%= g.getName() %></strong></td>
                     <td><span class="pill"><%= g.getStudentCount() %></span></td>
-                    <td class="muted"><%= g.getCreatedAt() != null ? g.getCreatedAt() : "—" %></td>
+                    <td><span class="muted">User #<%= g.getCreatedBy() %></span></td>
+                    <td class="muted"><%= g.getCreatedAt() %></td>
                     <td>
-                        <form method="post" action="${pageContext.request.contextPath}groups" class="inline-form">
+                        <form method="post" action="${pageContext.request.contextPath}/groups" class="inline-form">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="id" value="<%= g.getId() %>">
                             <button type="submit" class="danger-btn" onclick="return confirm('O\'chirishni tasdiqlaysizmi?')">O'chirish</button>
@@ -79,12 +80,11 @@
                     </td>
                 </tr>
                 <%
-                        }
-                    } else {
+                    }
+                } else {
                 %>
                 <tr>
-                    <td colspan="5" class="empty-state">Guruhlar mavjud emas</td>
-                </tr>
+                    <td colspan="6" class="empty-state">Guruhlar mavjud emas</td> </tr>
                 <% } %>
                 </tbody>
             </table>
