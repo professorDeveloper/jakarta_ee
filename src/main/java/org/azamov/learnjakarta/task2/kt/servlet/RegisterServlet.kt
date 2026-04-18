@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@WebServlet(name = "RegisterServlet", value = ["/register"])
+@WebServlet(name = "RegisterServlet", value = ["kt/register"])
 class RegisterServlet : HttpServlet() {
     private val authService = AuthService()
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {

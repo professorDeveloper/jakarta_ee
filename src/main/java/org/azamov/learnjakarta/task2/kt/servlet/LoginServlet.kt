@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@WebServlet(name = "LoginServlet", value = ["/login"])
+@WebServlet(name = "LoginServlet", value = ["kt/login"])
 class LoginServlet : HttpServlet() {
     val authService = AuthService()
     override fun doGet(req: HttpServletRequest?, resp: HttpServletResponse?) {
