@@ -1,6 +1,6 @@
-package org.azamov.learnjakarta.task2.kt.service
+package org.azamov.learnjakarta.task3.services
 
-import org.azamov.learnjakarta.task2.kt.model.User
+import org.azamov.learnjakarta.task3.model.User
 import org.postgresql.Driver
 import java.sql.DriverManager
 
@@ -25,14 +25,15 @@ class AuthService {
         "jdbc:postgresql://localhost:5432/jakarta?currentSchema=jdbc_example", "postgres", "2255"
     )
 
-    fun login(login: String, password: String): Boolean {
+    fun login(username: String, password: String): Int? {
         getConnection().use { connection ->
             val statement = connection.prepareStatement(
-                "SELECT * FROM users WHERE username = ? AND password = ?"
+                "SELECT id FROM users WHERE username = ? AND password = ?"
             )
-            statement.setString(1, login)
+            statement.setString(1, username)
             statement.setString(2, password)
-            return statement.executeQuery().next()
+            val rs = statement.executeQuery()
+            return if (rs.next()) rs.getInt("id") else null
         }
     }
 

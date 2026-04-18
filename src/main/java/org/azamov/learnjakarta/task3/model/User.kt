@@ -1,4 +1,4 @@
-package org.azamov.learnjakarta.task2.kt.model
+package org.azamov.learnjakarta.task3.model
 
 data class User(
     val id: Int = 0,
