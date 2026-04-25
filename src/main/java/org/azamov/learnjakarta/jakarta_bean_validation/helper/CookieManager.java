@@ -1,4 +1,4 @@
-package org.azamov.learnjakarta.task7_1.helper;
+package org.azamov.learnjakarta.jakarta_bean_validation.helper;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

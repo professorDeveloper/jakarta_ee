@@ -1,9 +1,9 @@
-package org.azamov.learnjakarta.task7_1.services;
+package org.azamov.learnjakarta.jakarta_bean_validation.services;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
-import org.azamov.learnjakarta.task7_1.helper.EntityManagerUtil;
-import org.azamov.learnjakarta.task7_1.model.User;
+import org.azamov.learnjakarta.jakarta_bean_validation.helper.EntityManagerUtil;
+import org.azamov.learnjakarta.jakarta_bean_validation.model.User;
 
 import java.util.List;
 

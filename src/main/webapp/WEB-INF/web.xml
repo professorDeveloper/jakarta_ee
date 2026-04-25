@@ -6,7 +6,7 @@
 
     <filter>
         <filter-name>AuthFilter</filter-name>
-        <filter-class>org.azamov.learnjakarta.task7_1.filter.AuthFilter</filter-class>
+        <filter-class>org.azamov.learnjakarta.jakarta_bean_validation.filter.AuthFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
@@ -20,7 +20,7 @@
 
     <servlet>
         <servlet-name>StudentServlet</servlet-name>
-        <servlet-class>org.azamov.learnjakarta.task7_1.servlet.StudentServlet</servlet-class>
+        <servlet-class>org.azamov.learnjakarta.jakarta_bean_validation.servlet.StudentServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>StudentServlet</servlet-name>

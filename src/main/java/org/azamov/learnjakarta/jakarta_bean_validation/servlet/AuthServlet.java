@@ -1,7 +1,9 @@
-package org.azamov.learnjakarta.task7_1.servlet;
+package org.azamov.learnjakarta.jakarta_bean_validation.servlet;
 
-import org.azamov.learnjakarta.task7_1.model.User;
-import org.azamov.learnjakarta.task7_1.services.AuthService;
+import jakarta.validation.ConstraintViolation;
+import org.azamov.learnjakarta.jakarta_bean_validation.helper.ValidationFactory;
+import org.azamov.learnjakarta.jakarta_bean_validation.model.User;
+import org.azamov.learnjakarta.jakarta_bean_validation.services.AuthService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
 
 @WebServlet(urlPatterns = {"/logout","/login","/register"})
 public class AuthServlet extends HttpServlet {
@@ -54,7 +57,20 @@ public class AuthServlet extends HttpServlet {
                 req.getRequestDispatcher("/WEB-INF/auth/login.jsp").forward(req, resp);
             }
         } else {
-            User user = authService.register(User.builder().name(req.getParameter("name")).username(req.getParameter("username")).password(req.getParameter("password")).build());
+            User registerUser = User.builder()
+                    .name(req.getParameter("name"))
+                    .username(req.getParameter("username"))
+                    .password(req.getParameter("password"))
+                    .build();
+
+            Set<ConstraintViolation<User>> violations = ValidationFactory.validate(registerUser);
+            if (!violations.isEmpty()) {
+                req.setAttribute("error", ValidationFactory.getErrors(violations));
+                req.getRequestDispatcher("/WEB-INF/auth/register.jsp").forward(req, resp);
+                return;
+            }
+
+            User user = authService.register(registerUser);
 
             if (user != null) {
                 Cookie cookie = new Cookie("userId", String.valueOf(user.getId()));

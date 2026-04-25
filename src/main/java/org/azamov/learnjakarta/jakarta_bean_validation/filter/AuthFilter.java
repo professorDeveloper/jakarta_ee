@@ -1,4 +1,4 @@
-package org.azamov.learnjakarta.task7_1.filter;
+package org.azamov.learnjakarta.jakarta_bean_validation.filter;
 
 import java.io.IOException;
 import javax.servlet.Filter;

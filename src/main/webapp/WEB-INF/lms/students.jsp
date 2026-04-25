@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.azamov.learnjakarta.task7_1.model.Student" %>
-<%@ page import="org.azamov.learnjakarta.task7_1.model.Group" %>
+<%@ page import="org.azamov.learnjakarta.jakarta_bean_validation.model.Student" %>
+<%@ page import="org.azamov.learnjakarta.jakarta_bean_validation.model.Group" %>
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -33,6 +33,10 @@
             <p class="page-subtitle">Barcha talabalar ro'yxati</p>
         </div>
     </div>
+    <% String error = (String) request.getAttribute("error"); %>
+    <% if (error != null) { %>
+    <div class="error-box"><%= error %></div>
+    <% } %>
 
     <div class="form-shell" style="margin-bottom: 20px;">
         <form method="post" action="${pageContext.request.contextPath}/students">

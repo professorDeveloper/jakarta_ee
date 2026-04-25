@@ -1,6 +1,9 @@
-package org.azamov.learnjakarta.task7_1.model;
+package org.azamov.learnjakarta.jakarta_bean_validation.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,14 +20,17 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @NotBlank
     String name;
 
     @Column(name = "created_at")
     String createdAt;
 
     @Transient
+    @PositiveOrZero
     int studentCount;
 
     @Column(name = "created_by")
+    @Positive
     int createdBy;
 }

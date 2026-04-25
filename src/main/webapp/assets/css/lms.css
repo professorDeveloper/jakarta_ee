@@ -365,6 +365,17 @@ tbody tr:hover {
     color: var(--muted);
 }
 
+.error-box {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-md);
+    background: #fef2f2;
+    color: var(--danger-strong);
+    font-size: 14px;
+    font-weight: 600;
+}
+
 .form-shell {
     padding: 30px;
 }
