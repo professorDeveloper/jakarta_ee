@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @WebFilter(filterName = "SecurityFilter", urlPatterns = {"/*"})
@@ -36,7 +38,9 @@ public class SecurityFilter implements Filter {
         String username = session != null ? (String) session.getAttribute("username") : null;
 
         if (username == null) {
-            response.sendRedirect(request.getContextPath() + "/login?next=" + path);
+            String query = request.getQueryString();
+            String full = query != null ? path + "?" + query : path;
+            response.sendRedirect(request.getContextPath() + "/login?next=" + URLEncoder.encode(full, StandardCharsets.UTF_8));
             return;
         }
 
@@ -53,9 +57,12 @@ public class SecurityFilter implements Filter {
 
     private boolean checkForRememberMe(HttpServletRequest request) {
         if (request.getSession().getAttribute("id") != null) return true;
-        for (Cookie cookie : request.getCookies()) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) return false;
+        for (Cookie cookie : cookies) {
             if (cookie.getName().equals("rememberMe")) {
                 AuthUser authUser = dao.findByID(cookie.getValue());
+                if (authUser == null) return false;
                 HttpSession session = request.getSession();
                 session.setAttribute("email", authUser.getEmail());
                 session.setAttribute("username", authUser.getUsername());

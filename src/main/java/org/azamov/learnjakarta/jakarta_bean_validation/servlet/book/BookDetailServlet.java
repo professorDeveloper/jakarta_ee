@@ -17,6 +17,10 @@ public class BookDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
+        if (id == null || id.isBlank()) {
+            resp.sendRedirect(req.getContextPath() + "/book/list");
+            return;
+        }
         Book book = bookDao.findByID(id);
         if (book == null) {
             resp.sendRedirect(req.getContextPath() + "/book/list");

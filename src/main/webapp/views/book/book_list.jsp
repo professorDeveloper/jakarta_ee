@@ -72,7 +72,7 @@
     String role = (String) session.getAttribute("role");
     boolean isAdmin = "ADMIN".equals(role);
     List<Book> books = (List<Book>) request.getAttribute("books");
-    int page = (Integer) request.getAttribute("page");
+    int currentPage = (Integer) request.getAttribute("page");
     long totalPages = (Long) request.getAttribute("totalPages");
 %>
 
@@ -147,24 +147,32 @@
         <% } %>
     </div>
 
-    <% if (totalPages > 1) { %>
+    <% if (totalPages > 1) {
+        int from = Math.max(0, currentPage - 2);
+        int to = (int) Math.min(totalPages - 1, currentPage + 2);
+    %>
     <div class="pagination">
-        <a href="?page=<%= page - 1 %>" class="page-btn <%= page == 0 ? "disabled" : "" %>">&#8592;</a>
-        <%
-            int from = Math.max(0, page - 2);
-            int to = (int) Math.min(totalPages - 1, page + 2);
-            if (from > 0) { %>
+        <% String prevCls = (currentPage == 0) ? "page-btn disabled" : "page-btn"; %>
+        <a href="?page=<%= currentPage - 1 %>" class="<%= prevCls %>">&#8592;</a>
+
+        <% if (from > 0) { %>
         <a href="?page=0" class="page-btn">1</a>
         <% if (from > 1) { %><span class="page-btn disabled">…</span><% } %>
-        <% }
-            for (int p = from; p <= to; p++) { %>
-        <a href="?page=<%= p %>" class="page-btn <%= p == page ? "active" : "" %>"><%= p + 1 %></a>
-        <% }
-            if (to < totalPages - 1) {
-                if (to < totalPages - 2) { %><span class="page-btn disabled">…</span><% } %>
+        <% } %>
+
+        <% for (int p = from; p <= to; p++) {
+            String cls = (p == currentPage) ? "page-btn active" : "page-btn";
+        %>
+        <a href="?page=<%= p %>" class="<%= cls %>"><%= p + 1 %></a>
+        <% } %>
+
+        <% if (to < totalPages - 1) { %>
+        <% if (to < totalPages - 2) { %><span class="page-btn disabled">…</span><% } %>
         <a href="?page=<%= totalPages - 1 %>" class="page-btn"><%= totalPages %></a>
         <% } %>
-        <a href="?page=<%= page + 1 %>" class="page-btn <%= page >= totalPages - 1 ? "disabled" : "" %>">&#8594;</a>
+
+        <% String nextCls = (currentPage >= totalPages - 1) ? "page-btn disabled" : "page-btn"; %>
+        <a href="?page=<%= currentPage + 1 %>" class="<%= nextCls %>">&#8594;</a>
     </div>
     <% } %>
 </div>
