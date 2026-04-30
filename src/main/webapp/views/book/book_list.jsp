@@ -58,6 +58,12 @@
         .empty { text-align: center; padding: 56px 32px; }
         .empty-title { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
         .empty-sub { font-size: 13.5px; color: #aaa; }
+
+        .pagination { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 20px; }
+        .page-btn { min-width: 34px; height: 34px; padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid #e8e8e5; background: #fff; color: #1c1c1c; font-size: 13px; font-weight: 600; font-family: 'DM Sans', sans-serif; text-decoration: none; cursor: pointer; transition: background .15s; }
+        .page-btn:hover { background: #f4f4f2; }
+        .page-btn.active { background: #1c1c1c; color: #fff; border-color: #1c1c1c; cursor: default; }
+        .page-btn.disabled { color: #ccc; border-color: #f0f0ee; cursor: default; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -66,6 +72,8 @@
     String role = (String) session.getAttribute("role");
     boolean isAdmin = "ADMIN".equals(role);
     List<Book> books = (List<Book>) request.getAttribute("books");
+    int page = (Integer) request.getAttribute("page");
+    long totalPages = (Long) request.getAttribute("totalPages");
 %>
 
 <div class="topbar">
@@ -138,6 +146,27 @@
         </table>
         <% } %>
     </div>
+
+    <% if (totalPages > 1) { %>
+    <div class="pagination">
+        <a href="?page=<%= page - 1 %>" class="page-btn <%= page == 0 ? "disabled" : "" %>">&#8592;</a>
+        <%
+            int from = Math.max(0, page - 2);
+            int to = (int) Math.min(totalPages - 1, page + 2);
+            if (from > 0) { %>
+        <a href="?page=0" class="page-btn">1</a>
+        <% if (from > 1) { %><span class="page-btn disabled">…</span><% } %>
+        <% }
+            for (int p = from; p <= to; p++) { %>
+        <a href="?page=<%= p %>" class="page-btn <%= p == page ? "active" : "" %>"><%= p + 1 %></a>
+        <% }
+            if (to < totalPages - 1) {
+                if (to < totalPages - 2) { %><span class="page-btn disabled">…</span><% } %>
+        <a href="?page=<%= totalPages - 1 %>" class="page-btn"><%= totalPages %></a>
+        <% } %>
+        <a href="?page=<%= page + 1 %>" class="page-btn <%= page >= totalPages - 1 ? "disabled" : "" %>">&#8594;</a>
+    </div>
+    <% } %>
 </div>
 </body>
 </html>

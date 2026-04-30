@@ -62,6 +62,24 @@ public abstract class BaseDao<T extends Base, ID extends Serializable> {
         return entities;
     }
 
+    public List<T> findPage(int page, int size) {
+        begin();
+        List<T> result = em.createQuery("from " + persistanceClass.getSimpleName() + " t order by t.createdAt desc", persistanceClass)
+                .setFirstResult(page * size)
+                .setMaxResults(size)
+                .getResultList();
+        commit();
+        return result;
+    }
+
+    public long count() {
+        begin();
+        long n = em.createQuery("select count(t) from " + persistanceClass.getSimpleName() + " t", Long.class)
+                .getSingleResult();
+        commit();
+        return n;
+    }
+
     public boolean deleteById(@NotNull ID id) {
         begin();
         em.createQuery("DELETE from " + persistanceClass.getSimpleName() + " t where t.id=:id")
