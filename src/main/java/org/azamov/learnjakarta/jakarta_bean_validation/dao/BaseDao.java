@@ -23,11 +23,16 @@ public abstract class BaseDao<T extends Base, ID extends Serializable> {
     }
 
     protected void begin() {
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+        }
         em.getTransaction().begin();
     }
 
     protected void rollback() {
-        em.getTransaction().rollback();
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+        }
     }
 
     protected void commit() {
@@ -35,57 +40,92 @@ public abstract class BaseDao<T extends Base, ID extends Serializable> {
     }
 
     public T save(T entity) {
-        begin();
-        em.persist(entity);
-        commit();
-        return entity;
+        try {
+            begin();
+            em.persist(entity);
+            commit();
+            return entity;
+        } catch (Exception e) {
+            rollback();
+            throw e;
+        }
     }
 
     public boolean update(T entity) {
-        begin();
-        em.merge(entity);
-        commit();
-        return true;
+        try {
+            begin();
+            em.merge(entity);
+            commit();
+            return true;
+        } catch (Exception e) {
+            rollback();
+            throw e;
+        }
     }
 
     public T findByID(@NotNull ID id) {
-        begin();
-        T entity = em.find(persistanceClass, id);
-        commit();
-        return entity;
+        try {
+            begin();
+            T entity = em.find(persistanceClass, id);
+            commit();
+            return entity;
+        } catch (Exception e) {
+            rollback();
+            throw e;
+        }
     }
 
     public List<T> findAll() {
-        begin();
-        List<T> entities = em.createQuery("from " + persistanceClass.getSimpleName(), persistanceClass).getResultList();
-        commit();
-        return entities;
+        try {
+            begin();
+            List<T> entities = em.createQuery("from " + persistanceClass.getSimpleName(), persistanceClass).getResultList();
+            commit();
+            return entities;
+        } catch (Exception e) {
+            rollback();
+            throw e;
+        }
     }
 
     public List<T> findPage(int page, int size) {
-        begin();
-        List<T> result = em.createQuery("from " + persistanceClass.getSimpleName() + " t order by t.createdAt desc", persistanceClass)
-                .setFirstResult(page * size)
-                .setMaxResults(size)
-                .getResultList();
-        commit();
-        return result;
+        try {
+            begin();
+            List<T> result = em.createQuery("from " + persistanceClass.getSimpleName() + " t order by t.createdAt desc", persistanceClass)
+                    .setFirstResult(page * size)
+                    .setMaxResults(size)
+                    .getResultList();
+            commit();
+            return result;
+        } catch (Exception e) {
+            rollback();
+            throw e;
+        }
     }
 
     public long count() {
-        begin();
-        long n = em.createQuery("select count(t) from " + persistanceClass.getSimpleName() + " t", Long.class)
-                .getSingleResult();
-        commit();
-        return n;
+        try {
+            begin();
+            long n = em.createQuery("select count(t) from " + persistanceClass.getSimpleName() + " t", Long.class)
+                    .getSingleResult();
+            commit();
+            return n;
+        } catch (Exception e) {
+            rollback();
+            throw e;
+        }
     }
 
     public boolean deleteById(@NotNull ID id) {
-        begin();
-        em.createQuery("DELETE from " + persistanceClass.getSimpleName() + " t where t.id=:id")
-                .setParameter("id", id)
-                .executeUpdate();
-        commit();
-        return true;
+        try {
+            begin();
+            em.createQuery("DELETE from " + persistanceClass.getSimpleName() + " t where t.id=:id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+            commit();
+            return true;
+        } catch (Exception e) {
+            rollback();
+            throw e;
+        }
     }
 }
